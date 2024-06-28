@@ -36,13 +36,13 @@
         });
 
         reader.addEventListener("reading", ({ message, serialNumber }) => {
-        console.log(`> Serial Number: ${serialNumber}`);
-        console.log(message);
-        const record = message.records[1];
-        const { data, encoding, recordType } = record;
-        const textDecoder = new TextDecoder(encoding);
-        const text = textDecoder.decode(data);
-        readLog.textContent = `> Serial Number: ${serialNumber}`;
+          console.log(`> Serial Number: ${serialNumber}`);
+          console.log(message);
+          const record = message.records[0];
+          const { data, encoding, recordType } = record;
+          const textDecoder = new TextDecoder(encoding);
+          const text = textDecoder.decode(data);
+          readLog.textContent = `> Serial Number: ${serialNumber}`;
         });
     } catch (error) {
         readLog.textContent = error;
