@@ -42,7 +42,7 @@
           const { data, encoding, recordType } = record;
           const textDecoder = new TextDecoder(encoding);
           const text = textDecoder.decode(data);
-          readLog.textContent = `> Serial Number: ${serialNumber}`;
+          readLog.textContent = text;
         });
     } catch (error) {
         readLog.textContent = error;
