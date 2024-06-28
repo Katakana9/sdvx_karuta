@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="https://glitch.com/favicon.ico" />
+    <title>WebNFC</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <h1>
+      WebNFC
+    </h1>
+    <hr />
+
+    <h2>
+      Read
+    </h2>
+    <button id="readButton" class="button">Read</button>
+    <div id="readLog" class="log"></div>
+  </body>
+
+  <script>
+    const readButton = document.getElementById("readButton");
+    const readLog = document.getElementById("readLog");
+
+    readButton.addEventListener("click", async () => {
+    readLog.textContent = await "clicked read button";
+    try {
+        const reader = new NDEFReader();
+        await reader.scan();
+        readLog.textContent = "scan started";
+
+        reader.addEventListener("error", () => {
+        console.log("Error");
+        });
+
+        reader.addEventListener("reading", ({ message, serialNumber }) => {
+        console.log(`> Serial Number: ${serialNumber}`);
+        console.log(message);
+        const record = message.records[0];
+        const { data, encoding, recordType } = record;
+        if (recordType === "text") {
+            const textDecoder = new TextDecoder(encoding);
+            const text = textDecoder.decode(data);
+            readLog.textContent = text;
+        }
+        });
+    } catch (error) {
+        readLog.textContent = error;
+    }
+    });
+  </script>
+</html>
