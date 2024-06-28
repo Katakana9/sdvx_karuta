@@ -42,11 +42,17 @@
           const { data, encoding, recordType } = record;
           const textDecoder = new TextDecoder(encoding);
           const text = textDecoder.decode(data);
-          readLog.textContent = text;
+          readLog.textContent = "read complete";
+          playSound(text);
         });
     } catch (error) {
         readLog.textContent = error;
     }
     });
+
+    function playSound(id) {
+      const audio = new Audio(id+'.mp3');
+      audio.play();
+    }
   </script>
 </html>
